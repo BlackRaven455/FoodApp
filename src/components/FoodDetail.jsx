@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./fooddetail.module.css";
+import ItemList from "./ItemList.jsx";
+import Item from "./Item.jsx";
 
 export default function FoodDetail({ foodId }) {
   const [food, setFood] = useState([]);
@@ -45,23 +47,23 @@ export default function FoodDetail({ foodId }) {
             ¥{Math.round((food.pricePerServing / 100) * 146.59)} Per serving
           </span>
         </div>
-        <div className={styles.recipeInstructions}>
+        <div>
+          <h2>Ingredients</h2>
+          {isLoading ? <p>Loading...</p> : <ItemList food={food} />}
+
           <h2> Instruction</h2>
-          <ol>
-            {isLoading ? (
-              <p>Loading...</p>
-            ) : (
-              food.analyzedInstructions[0].steps.map((step, index) => (
-                <li key={index}>{step.step}</li>
-              ))
-            )}
-          </ol>
-          {/*{console.log(food.analyzedInstructions[0])}*/}
-          {/*{food.analyzedInstructions &&*/}
-          {/*  food.analyzedInstructions.length > 0 &&food.analyzedInstructions[0].steps.map((step, index) => (
-              <li key={index}>{step.step}</li>
-            ))*/}
-          {/*  }*/}
+
+          <div className={styles.recipeInstructions}>
+            <ol>
+              {isLoading ? (
+                <p>Loading...</p>
+              ) : (
+                food.analyzedInstructions[0].steps.map((step, index) => (
+                  <li key={index}>{step.step}</li>
+                ))
+              )}
+            </ol>
+          </div>
         </div>
       </div>
     </div>
